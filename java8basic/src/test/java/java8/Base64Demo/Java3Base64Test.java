@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class Java3Base64Test {
     @Test
     public void base64demo() throws Exception {
-        new Java3Base64().base64demo();
+        new Java3Base64().Base64Demo();
     }
 
 }
