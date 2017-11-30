@@ -24,6 +24,10 @@ public class JavaStreamDemo {
         //foreach->Stream 提供了新的方法 'forEach' 来迭代流中的每个数据。
         stringList.forEach(System.out::println);
 
+        //->sort
+        stringList.sort(String::compareTo);
+
+
         //map->方法用于映射每个元素对应的结果，以下代码使用map输出了元素对应平方数
         List<Integer> integerList = Arrays.asList(3, 2, 2, 7, 3, 5);
         List<Integer> integers = integerList.stream().map(i -> i * i).distinct().collect(Collectors.toList());
