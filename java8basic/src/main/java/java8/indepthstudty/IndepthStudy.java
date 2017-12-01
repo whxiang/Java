@@ -2,6 +2,7 @@ package java8.indepthstudty;
 
 import sun.java2d.pipe.SpanIterator;
 
+import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Spliterators;
 import java.util.stream.Stream;
@@ -17,7 +18,7 @@ public class IndepthStudy {
 
 
     @FunctionalInterface
-    public interface A  {
+    public interface A {
 
         //defaultTest
         default void defaultTest() {
@@ -40,7 +41,7 @@ public class IndepthStudy {
         //support stream
         default Stream stream() {
             //return Spliterators.spliterator(this,0);
-            return  null;
+            return null;
         }
 
     }
@@ -68,6 +69,18 @@ public class IndepthStudy {
     }
 
 
+    @FunctionalInterface
+    public interface D {
+        void test(String s);
+    }
+
+
+    @FunctionalInterface
+    public interface E {
+        void test(PrintStream out, String s);
+    }
+
+
     public interface C extends A, B {
 
         @Override
@@ -91,6 +104,8 @@ public class IndepthStudy {
             }
         };
 
+        C c1 = () -> System.out.println("This is implement");
+
         c.defaultTest();
 
         c.variableStatic();
@@ -102,10 +117,20 @@ public class IndepthStudy {
         B.staticTest();
 
 
+        D d = (s) -> System.out.println(s);
+        d.test("lambda");
+
+        //使用方法的引用，实例方法的引用
+        D dl = System.out::println;
+        dl.test("方法引用");
 
 
-
+        E e = PrintStream::println;
+        e.test(System.out, "第一个参数");
+        E ee = (x, y) -> {
+            x.println(y);
+        };
+        ee.test(System.out, "测试");
     }
-
 
 }
