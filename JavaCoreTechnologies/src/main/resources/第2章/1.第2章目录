@@ -9,13 +9,85 @@
     4.为什么要配置环境变量？
     5.设置执行路径的命令操作有哪些？
     6.安装好jdk后的命令有哪些？
-    7.jvm运行的流程？
+    7.jdk每个文件夹的名称和作用
+    8.jvm运行的流程？
 
 
 
 
 
  总结：
+     java 背景来源：
+     任职于太阳微系统的詹姆斯·高斯林等人于1990年代初开发Java语言的雏形，
+     最初被命名为Oak，目标设置在家用电器等小型系统的程序语言，
+     应用在电视机、电话、闹钟、烤面包机等家用电器的控制和通信。
+
+     java时间简史列表：
+     时间   Jdk版本  语言新特性
+     1996   1.0   语言本身
+     1997   1.1   内部类
+     1998   1.2   无
+     2000   1.3   无
+     2002   1.4   断言
+     2004   5.0   泛型类型，for each循环,可变参数，自动装箱拆箱，元数据，枚举，静态套入
+     2006   6     无
+     2011   7     基于字符串的switch,变形操作符，二进制字面量，异常处理改进
+     2014   8     Lambda表达式，其次，新加入的Nashorn引擎也使得Java程序可以和JavaScript代码互操作；
+                  再者，新的日期时间API、GC改进、并发
+     2017   9     Java平台模块系统引入了一种新的Java编程组件，即模块,更简洁的试用资源语句try-with-resources,
+                  @SafeVarargs annotation is allowed on private instance methods.
+
+     Jdk是java开发工具包(java development kit)的缩写，它是一种构建在java平台上发布的应用程序，
+     apple和组件的开发环境。它提供了Java的开发环境和运行环境,开发java程序就必须安装JDK。没有JDK的话，无法编译Java程序。
+
+     JRE是Java运行环境(Java Runtime Enviroment)的缩写。它基本上就和Java虚拟机是同一个概念。
+     一般来说，在谈论一个具体的产品的时候，可以说“JRE”,而说到理论中的一个模型的时候，
+     我们常用的是“Java虚拟机”。要使用Java程序，JRE是必不可少的环境。
+
+     开发环境配置：
+
+     JAVA_HOME:
+     E:\xwh\kit\Java\jdk1.8.0_102
+     javac.exe的执行程序路径->path:%JAVA_HOME\bin%
+     到哪里找需要执行的.class文件->classpath:%JAVA_HOME\lib%
+
+     环境变量作用:
+     环境变量没什么特别的，变量在任何程序中的作用都是 被赋值/被使用！这个全局变量操作系统可以使用，其内的小软件也可以使用！
+
+     Path变量的作用：
+     系统变量Path告诉操作系统可执行文件(*.exe、*.bat等)所在的路径，当OS(操作系统)发现某个*.exe时，
+     windows默认从当前目录开始查找这个命令，若查不到，OS就会到Path所设定的路径中去寻找该命令，然后执行。
+
+     CLASSPATH的作用：
+     CLASSPATH是专门针对java的，它相当于windows的path；path是针对整个windows的。
+     CLASSPATH告诉java虚拟机(jvm)要使用或执行的*.class文件放在什么地方。
+     所谓的JVM就好像是在微软OS上面再激活另外一个OS，对JVM来说CLASSPATH就好像是对微软OS来说的PATH，
+     所以要用jvm开运行程序就需要设定classpath，然而jvm像windows一样它也有个默认的查找class文件的路径，
+     对刚开始学习java的我们来说，默认的已经够我们用了，那就是当前路径，因此不设置classpath也可以。
+
+     jdk文件夹的作用:
+     1.bin:
+       jdk中所包含的开发工具的可执行文件,path环境变量应该包含一个指向此项目的项。一些命令行工具，包括java编译器的启动命令。
+       javac.exe：java语言编译器，它负责将java源代码（.java作为扩展名）编译为字节码(.class作为扩展名)文件
+       java.exe:java语言解释器，它负责执行java字节码文件
+       appletviewer.exe  java applet小程序查看器
+       javadoc.exe  java语言文档生成器，将源程序中注释生成html
+       jar.exe  ava文件压缩打包工具
+       javap.exe -- class文件 反编译工具
+     2.lib:
+       环境变量没什么特别的，变量在任何程序中的作用都是 被赋值/被使用！这个全局变量操作系统可以使用，其内的小软件也可以使用！
+       除去jre中包含的类库，JDK额外需要的一些类库。
+     3.include:
+       java和jvm交互用的头文件,include:本地方法文件。编写jni等程序需要的C头文件
+     4.jre：
+       jre是jdk本身的运行环境
+     5.db:
+        纯Java开发的数据可 Derby，是一个开源的100%Java开发的关系数据库
+     6.src
+       归档的Java源代码
+     7.javaFX:
+       JavaFX 包含了一些列图形和媒体包，允许程序员设计、创建、测试、调试、和部署富客户端应用并且保持跨平台的操作一致性。
+
 
 
 
