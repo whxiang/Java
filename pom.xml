@@ -6,17 +6,35 @@
 
     <groupId>java-project-learning</groupId>
     <artifactId>java.learning</artifactId>
+    <!---->
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>java8basic</module>
-        <module>JavaCoreTechnologies</module>
-    </modules>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
     </properties>
+
+
+    <!--聚合-->
+    <modules>
+        <module>java8basic</module>
+        <module>JavaCoreTechnologies</module>
+    </modules>
+
+    <!--继承（不会都被继承，只有引用的时候才会被继承）-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>

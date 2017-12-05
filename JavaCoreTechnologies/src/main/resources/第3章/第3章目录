@@ -1,0 +1,211 @@
+
+
+
+1.main的作用？
+  java虚拟机通过main方法找到需要启动的运行程序，并且检查main函数所在类是否被java虚拟机装载。如果没有装载，
+  那么就装载该类，并且装载所有相关的其他类。因此程序在运行的时候，第一个执行的方法就是main()方法。
+  这个main()方法的声明为：public static void main(String args[]) 。必须这么定义，这是Java的规范。
+
+  为什么要这么定义，和JVM的运行有关系。
+  当一个类中有main()方法，执行命令“java 类名”则会启动虚拟机执行该类中的main方法。
+  由于JVM在运行这个Java应用程序的时候，首先会调用main方法，调用时不实例化这个类的对象，
+  而是通过类名直接调用,因此需要是限制为public static
+  对于java中的main方法，jvm有限制，不能有返回值，因此返回值类型为void。
+  main方法中还有一个输入参数，类型为String[]，这个也是java的规范，main()方法中必须有一个入参，类细必须String[] ，
+  至于字符串数组的名字，这个是可以自己设定的，根据习惯，这个字符串数组的名字一般和sun
+  java规范范例中main参数名保持一致，取名为args。
+  因此，main()方法定义必须是：“public static void main(String 字符串数组参数名[])
+
+
+
+2.数据类型?
+
+  java是一种强类型语言，在java中，一共8中基础类型(primitive type)其中有4个整型,2种浮点类型,1种
+  表示unicode编码的字符单元的字符类型char,和1种用于表示真值的boolean
+  从java 7开始，加上ox   ob(表示二进制)
+
+  类型        存储                    取值范围
+  int         4字节                   -(2)31~(2)31-1
+  short       2byte                   -(2)15~(2)15-1
+  long        8byte                   -(2)63~(2)63-1
+  byte        1byte                   -(2)8~(2)7-1
+  float       4byte                   3.14F *( -(2)31~(2)31-1)
+  double      8byte                   31.4*-(2)63~(2)63-1
+  char        1byte                   -(2)8~(2)7-1
+  boolean     1byte                     -(2)8~(2)7-1
+
+  三个特殊的浮点型：
+  NaN\
+  无穷大
+  无穷小
+                             double
+                             |
+                             |
+ bite ------>short--------->int------------>long
+                              |               |
+                              |               |
+                              float         double
+
+
+
+  String和StringBuilder和StringBuffer的作用以及区别?
+  1.String:字符串常量，字符串长度不可变。java中String是(immutable不可变)的。
+
+  2 StringBuffer（JDK1.0）
+    StringBuffer：字符串变量（Synchronized，即线程安全）。如果要频繁对字符串内容进行修改，
+    出于效率考虑最好使用StringBuffer，如果想转成String类型，可以调用StringBuffer的toString()方法。
+    Java.lang.StringBuffer线程安全的可变字符序列。在任意时间点上它都包含某种特定的字符序列，
+    但通过某些方法调用可以改变该序列的长度和内容。可将字符串缓冲区安全地用于多个线程。
+    StringBuffer 上的主要操作是 append 和 insert 方法，可重载这些方法，以接受任意类型的数据。
+    每个方法都能有效地将给定的数据转换成字符串，然后将该字符串的字符追加或插入到字符串缓冲区中。
+    append 方法始终将这些字符添加到缓冲区的末端；而 insert 方法则在指定的点添加字符。
+    例如，如果 z 引用一个当前内容是“start”的字符串缓冲区对象，则此方法调用 z.append("le")
+    会使字符串缓冲区包含“startle”，而 z.insert(4, "le") 将更改字符串缓冲区，使之包含“starlet”。
+
+  3.StringBuilder（JDK5.0）
+    StringBuilder：字符串变量（非线程安全）。在内部，StringBuilder对象被当作是一个包含字符序列的变长数组。
+    java.lang.StringBuilder是一个可变的字符序列，是JDK5.0新增的。
+    此类提供一个与 StringBuffer 兼容的 API，但不保证同步。
+    该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。
+    其构造方法如下：
+    构造方法	描述
+    StringBuilder()	创建一个容量为16的StringBuilder对象（16个空元素）
+    StringBuilder(CharSequence cs)	创建一个包含cs的StringBuilder对象，末尾附加16个空元素
+    StringBuilder(int initCapacity)	创建一个容量为initCapacity的StringBuilder对象
+    StringBuilder(String s)	创建一个包含s的StringBuilder对象，末尾附加16个空元素
+
+   基本原则：如果要操作少量的数据，用String ；单线程操作大量数据，用StringBuilder ；多线程操作大量数据，用StringBuffer。
+
+  4.String 常量池技术(String的享元模式)
+  String对象一旦被创建就是固定不变的了，对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象
+  每当我们创建字符串常量时，JVM会首先检查字符串常量池，如果该字符串已经存在常量池中，
+  那么就直接返回常量池中的实例引用。如果字符串不存在常量池中，就会实例化该字符串并且将其放到常量池中。
+  由于String字符串的不可变性我们可以十分肯定常量池中一定不存在两个相同的字符串
+
+  Java中的常量池，实际上分为两种形态：静态常量池和运行时常量池。
+  所谓静态常量池，即*.class文件中的常量池，class文件中的常量池不仅仅包含字符串(数字)字面量
+  ，还包含类、方法的信息，占用class文件绝大部分空间。
+  而运行时常量池，则是jvm虚拟机在完成类装载操作后，将class文件中的常量池载入到内存中
+  ，并保存在方法区中，我们常说的常量池，就是指方法区中的运行时常量池。
+
+  JVM对String str="abc"对象放在常量池中是在编译时做的，
+  而String str3=str1+str2是在运行时刻才能知道的。new对象也是在运行时才做的
+  str1 + str2通过StringBuilder的最后一步toString()方法还原一个新的String对象"abcdef"，因此堆中开辟一块空间存放此对象
+  JVM对于字符串引用，由于在字符串的"+"连接中，有字符串引用存在，而引用的值在程序编译期是无法确定的，即"a" + s1无法被编译器优化，只有在程序运行期来动态分配并将连接后的新地址赋给s2
+
+  总结来说就是：字面量"+"拼接是在编译期间进行的，拼接后的字符串存放在字符串池中；而字符串引用的"+"拼接运算实在运行时进行的，新创建的字符串存放在堆中。
+
+  对于直接相加字符串，效率很高，因为在编译器便确定了它的值，也就是说形如"I"+"love"+"java"; 的字符串相加，在编译期间便被优化成了"Ilovejava"。
+  对于间接相加（即包含字符串引用），形如s1+s2+s3; 效率要比直接相加低，因为在编译器不会对引用变量进行优化。
+
+
+  5.""和new string("")的区别
+   （1）单独使用""引号创建的字符串都是常量,编译期就已经确定存储到String Pool中；
+
+   （2）使用new String("")创建的对象会存储到heap中,是运行期新创建的；
+
+    new创建字符串时首先查看池中是否有相同值的字符串，如果有，则拷贝一份到堆中，然后返回堆中的地址；如果池中没有，
+
+    则在堆中创建一份，然后返回堆中的地址（注意，此时不需要从堆中复制到池中，否则，将使得堆中的字符串永远是池中的子集，导致浪费池的空间）！
+
+   （3）使用只包含常量的字符串连接符如"aa" + "aa"创建的也是常量,编译期就能确定,已经确定存储到String Pool中；
+
+   （4）使用包含变量的字符串连接符如"aa" + s1创建的对象是运行期才创建的,存储在heap中；
+
+ 6.使用String不一定创建对象
+
+ 在执行到双引号包含字符串的语句时，如String a = "123"，JVM会先到常量池里查找，如果有的话返回常量池里的这个实例的引用，
+
+ 否则的话创建一个新实例并置入常量池里。所以，当我们在使用诸如String str = "abc"；的格式定义对象时，
+ 总是想当然地认为，创建了String类的对象str。担心陷阱！对象可能并没有被创建！而可能只是指向一个先前已经创建的对象。
+
+ 只有通过new()方法才能保证每次都创建一个新的对象。
+
+ 7.使用new String，一定创建对象
+
+ 在执行String a = new String("123")的时候，首先走常量池的路线取到一个实例的引用，然后在堆上创建一个新的String实例，
+
+ 走以下构造函数给value属性赋值，然后把实例引用赋值给a：
+
+ 8.关于equals和==
+
+ （1）对于==，如果作用于基本数据类型的变量（byte,short,char,int,long,float,double,boolean ），
+ 则直接比较其存储的"值"是否相等；如果作用于引用类型的变量（String），则比较的是所指向的对象的地址（即是否指向同一个对象）。
+
+ （2）equals方法是基类Object中的方法，因此对于所有的继承于Object的类都会有该方法。
+ 在Object类中，equals方法是用来比较两个对象的引用是否相等，即是否指向同一个对象。
+
+ （3）对于equals方法，注意：equals方法不能作用于基本数据类型的变量。如果没有对equals方法进行重写，
+ 则比较的是引用类型的变量所指向的对象的地址；而String类对equals方法进行了重写，用来比较指向的字符串对象所存储的字符串是否相等。其他的一些类诸如Double，Date，Integer等，
+ 都对equals方法进行了重写用来比较指向的对象所存储的内容是否相等。
+
+
+  byte/int常量池技术
+  private static class IntegerCache
+  static {
+               // high value may be configured by property
+               int h = 127;
+               String integerCacheHighPropValue =
+                   sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+               if (integerCacheHighPropValue != null) {
+                   try {
+                       int i = parseInt(integerCacheHighPropValue);
+                       i = Math.max(i, 127);
+                       // Maximum array size is Integer.MAX_VALUE
+                       h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+                   } catch( NumberFormatException nfe) {
+                       // If the property cannot be parsed into an int, ignore it.
+                   }
+               }
+               high = h;
+
+               cache = new Integer[(high - low) + 1];
+               int j = low;
+               for(int k = 0; k < cache.length; k++)
+                   cache[k] = new Integer(j++);
+
+               // range [-128, 127] must be interned (JLS7 5.1.7)
+               assert IntegerCache.high >= 127;
+           }
+
+           private IntegerCache() {}
+   }
+
+
+  为什么要有基础包装类型和引用类型?
+  我们知道Java是一个面相对象的编程语言，基本类型并不具有对象的性质，
+  为了让基本类型也具有对象的特征，就出现了包装类型（如我们在使用集合类型Collection时就一定要使用包装类型而非基本类型），
+  它相当于将基本类型“包装起来”，使得它具有了对象的性质，并且为其添加了属性和方法，丰富了基本类型的操作。
+  另外，当需要往ArrayList，HashMap中放东西时，像int，double这种基本类型是放不进去的，因为容器都是装object的， 这是就需要这些基本类型的包装器类了。
+
+  然后对于包装类，主要作用是：
+  1.作为和基本数据类型对应的类类型存在，方便涉及到对象的操作。
+  2.包含每种基本数据类型的相关属性如最大值、最小值等，以及相关的操作方法。
+  引用类型占用内存的情况
+
+
+   //原汁原味链接：http://stackoverflow.com/questions/3912303/boolean-hashcode
+   //1. 使用质素是因为假如要把Boolean指插入到hashtable中，如果不是质素的话可能会比较容易造成哈希冲突。
+    符合对象计算hashcode的时候通常会把各个属性的hashcode相加然后再做hash,如果是比较小的质素，容易造成hash分布不均匀。
+   //2. Maps是可以包裹Boolean的，而如果map除了包含Boolean对象，还包含其他对象，那么如果不适当处理，就很容易有冲突了
+   public static int hashCode(boolean value) {
+          return value ? 1231 : 1237;
+   }
+
+
+
+  字符编码?
+
+  待续。。。。。。。。。。。。。。。
+
+
+
+
+
+
+
+
+
+
+
+
